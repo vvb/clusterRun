@@ -24,6 +24,20 @@ func main() {
 
 	var node, cmdStr string
 	for _, line := range lines {
+		if line == "" {
+			fmt.Println("skipping empty line..")
+			continue
+		}
+
+		// remove any preceding spaces
+		line = strings.TrimLeft(line, " ")
+
+		// ignore lines that are commented out
+		if strings.Index(line, "#") == 0 {
+			continue
+		}
+
+		// extract node and cmd strings
 		node = strings.Split(line, ":")[0]
 		cmdStr = strings.Split(line, ":")[1]
 
