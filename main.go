@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"flag"
 	"fmt"
 	"log"
@@ -45,15 +44,10 @@ func main() {
 			continue
 		}
 
-		fmt.Println("running on node", node, cmdStr)
+		fmt.Println("====>", node, cmdStr)
 		cmd := exec.Command(*prefix, "ssh", node, "-c", cmdStr)
-		var out bytes.Buffer
-		cmd.Stdout = &out
-		err := cmd.Run()
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("%q\n", out.String())
+		output, err := cmd.CombinedOutput()
+		fmt.Println("<==== %s %s", output, err)
 	}
 }
 
