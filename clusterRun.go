@@ -47,8 +47,22 @@ func main() {
 		fmt.Println("====>", node, cmdStr)
 		cmd := exec.Command(*prefix, "ssh", node, "-c", cmdStr)
 		output, err := cmd.CombinedOutput()
-		fmt.Println("<==== %s %s", output, err)
+		fmt.Println("<====", byteToString(output))
+		if err != nil {
+			fmt.Println("===ERROR===", err)
+		}
 	}
+}
+
+func byteToString(c []byte) string {
+	n := -1
+	for i, b := range c {
+		if b == 0 {
+			break
+		}
+		n = i
+	}
+	return string(c[:n+1])
 }
 
 // readLines reads a whole file into memory
