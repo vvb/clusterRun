@@ -37,8 +37,16 @@ func main() {
 		}
 
 		// extract node and cmd strings
-		node = strings.Split(line, ":")[0]
-		cmdStr = strings.Split(line, ":")[1]
+		array := strings.Split(line, ":")
+		node = array[0]
+		for i, value := range array {
+			if i == 0 {
+				continue
+			} else if i > 1 {
+				cmdStr += ":"
+			}
+			cmdStr += value
+		}
 
 		if !((*filter == "*") || (*filter == node)) {
 			continue
@@ -51,6 +59,7 @@ func main() {
 		if err != nil {
 			fmt.Println("===ERROR===", err)
 		}
+		cmdStr = ""
 	}
 }
 
